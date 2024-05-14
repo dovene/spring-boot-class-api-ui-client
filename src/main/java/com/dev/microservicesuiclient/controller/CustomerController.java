@@ -45,7 +45,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id")  Long id, Model model) {
         Mono<Customer> customerMono = webClient.get()
                 .uri("/{id}", id)
                 .retrieve()
@@ -54,10 +54,10 @@ public class CustomerController {
         return "customer-update";
     }
 
-    @PostMapping("/{id}")
-    public String updateCustomer(@PathVariable Long id, @ModelAttribute Customer customer) {
+    @PostMapping("/update")
+    public String updateCustomer(@ModelAttribute Customer customer) {
         webClient.put()
-                .uri("/{id}", id)
+                .uri("/{id}", customer.getId())
                 .body(Mono.just(customer), Customer.class)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -66,7 +66,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteCustomer(@PathVariable Long id) {
+    public String deleteCustomer(@PathVariable("id") Long id) {
         webClient.delete()
                 .uri("/{id}", id)
                 .retrieve()

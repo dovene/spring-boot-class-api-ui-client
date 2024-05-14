@@ -5,10 +5,11 @@
 </head>
 <body>
     <h1>Update Customer</h1>
-    <form action="/customers/{id}" method="post" th:object="${customer}">
+    <form action="/customers/update"    method="post" th:object="${customer}">
         <input type="text" th:field="*{firstName}" placeholder="First Name" required><br>
         <input type="text" th:field="*{lastName}" placeholder="Last Name" required><br>
-        <input type="date" th:field="*{dateOfBirth}" required><br>
+        <input type="date" th:field="*{dateOfBirth}" th:format="'yyyy-MM-dd'" required><br>
+        <input type="hidden" th:field="*{id}">
         <button type="submit">Submit</button>
     </form>
 </body>
